@@ -5,11 +5,15 @@ using Creational.AbstractFactory.Factories;
 using Creational.AbstractFactory.Interfaces;
 using Creational.FactoryMethod.Interfaces;
 using Creational.FactoryMethod.Factories;
+using Behavior.Strategy;
+using Behavior.Strategy.Interfaces;
+using Behavior.Strategy.AuthServices;
 
 internal partial class Program
 {
     private static void Main(string[] args)
     {
+        #region Creational Patterns
         // Singleton pattern
         var config = ConfigurationManagerSingleton<DeviceInfoProvider>.Instance;
         var deviceModel = config.GetDeviceModel();
@@ -57,12 +61,24 @@ internal partial class Program
 
         appFactory.CreateApp().InstallApp();
         appFactory.CreateApp().UninstallApp();
-        
+        #endregion
+
+        #region Structural Patterns
+        // Strategic pattern
+        var login = "Hell@gmail.com";
+
+        IAuthService authService = login.Contains("@") && login.Contains(".")
+            ? new EmailAuthService()
+            : new PhoneAuthService();
+        var isSucces = new AuthContext(authService);
+
+        #endregion
 
 
+        #region Behavioral Patterns
 
 
-
+        #endregion
 
 
     }
