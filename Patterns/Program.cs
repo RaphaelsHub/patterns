@@ -8,6 +8,9 @@ using Creational.FactoryMethod.Factories;
 using Behavior.Strategy;
 using Behavior.Strategy.Interfaces;
 using Behavior.Strategy.AuthServices;
+using Behavior.ChainOfResponsibility.Model;
+using Behavior.ChainOfResponsibility.Abstractions;
+using Behavior.ChainOfResponsibility.ValidionsHandlers;
 
 internal partial class Program
 {
@@ -72,6 +75,14 @@ internal partial class Program
             : new PhoneAuthService();
         var isSucces = new AuthContext(authService);
 
+
+        // Chain of Responsibility pattern
+        var booking = new BookingModel("Alex", 100.4m);
+        BookingSaveHandlerBase handlerBase = new ValidateCustomerNameHandler();
+        BookingSaveHandlerBase nextHandler = new ValidatePriceHandler();
+        handlerBase.SetNext(nextHandler);
+        var isValid = handlerBase.Handle(booking);
+        
         #endregion
 
 
