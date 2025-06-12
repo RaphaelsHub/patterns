@@ -11,6 +11,9 @@ using Behavior.Strategy.AuthServices;
 using Behavior.ChainOfResponsibility.Model;
 using Behavior.ChainOfResponsibility.Abstractions;
 using Behavior.ChainOfResponsibility.ValidionsHandlers;
+using System.Windows.Input;
+using Behavior.Command;
+using Behavior.State;
 
 internal partial class Program
 {
@@ -82,7 +85,24 @@ internal partial class Program
         BookingSaveHandlerBase nextHandler = new ValidatePriceHandler();
         handlerBase.SetNext(nextHandler);
         var isValid = handlerBase.Handle(booking);
-        
+
+
+        // Command pattern
+        Behavior.Command.ICommand createBookingCommand = new CreateBookingCommand(booking);
+        createBookingCommand.Execute();
+
+        Behavior.Command.ICommand deleteBookingCommand = new DeleteBookingCommand(booking);
+        deleteBookingCommand.Execute();
+
+
+        // State pattern
+        IFlightState state = new PlannedState();
+        var flightContext = new FlightStateContext();
+        flightContext.SetState(state);
+        Console.WriteLine(flightContext.GetStatus());
+        Console.WriteLine(flightContext.CanEdit());
+
+
         #endregion
 
 
