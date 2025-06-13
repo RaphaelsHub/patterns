@@ -1,5 +1,7 @@
 using Behavior.ChainOfResponsibility.Model;
 
+namespace Behavior.Observer;
+
 public class LoggingBookingNotificationService : IBookingObserverService
 {
     public void OnBookingCreated(BookingModel booking)

@@ -1,6 +1,8 @@
 using Behavior.ChainOfResponsibility.Model;
 
-public class BookingPublisher
+namespace Behavior.Observer;
+
+public class BookingObserver
 {
     private readonly List<IBookingObserverService> _observers = new List<IBookingObserverService>();
 
