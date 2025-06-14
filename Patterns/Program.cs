@@ -14,6 +14,7 @@ using Behavior.ChainOfResponsibility.ValidionsHandlers;
 using System.Windows.Input;
 using Behavior.Command;
 using Behavior.State;
+using Behavior.Mediatr;
 
 internal partial class Program
 {
@@ -102,16 +103,24 @@ internal partial class Program
         Console.WriteLine(flightContext.GetStatus());
         Console.WriteLine(flightContext.CanEdit());
 
+        // Observer pattern
+        var bookingObserver = new Behavior.Observer.BookingObserver();
+        bookingObserver.Subscribe(new Behavior.Observer.LoggingBookingNotificationService());
+        bookingObserver.Subscribe(new Behavior.Observer.EmailBookingNotificationService());
+        bookingObserver.Notify(booking);
+
+        // Mediator pattern
+        var mediator = new Mediator();
+        mediator.RegisterHandler<GetTimeQuery, string>(new GetTimeHandler());
+        var result = mediator.Send<GetTimeQuery, string>(new GetTimeQuery());
+        Console.WriteLine(result);
 
         #endregion
-
 
         #region Behavioral Patterns
 
 
         #endregion
-
-
     }
 }
 }
