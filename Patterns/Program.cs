@@ -15,6 +15,7 @@ using System.Windows.Input;
 using Behavior.Command;
 using Behavior.State;
 using Behavior.Mediatr;
+using Structural.Adapter;
 
 internal partial class Program
 {
@@ -118,7 +119,9 @@ internal partial class Program
         #endregion
 
         #region Behavioral Patterns
-
+        // Adapter pattern
+        IEmailService emailService = new EmailAdapter(new ExternalMailSender());
+        emailService.SendEmail("daddy", "Hello", "This is a test email").Wait();
 
         #endregion
     }
