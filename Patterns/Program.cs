@@ -16,6 +16,7 @@ using Behavior.Command;
 using Behavior.State;
 using Behavior.Mediatr;
 using Structural.Adapter;
+using Structural.Bridge;
 
 internal partial class Program
 {
@@ -122,6 +123,23 @@ internal partial class Program
         // Adapter pattern
         IEmailService emailService = new EmailAdapter(new ExternalMailSender());
         emailService.SendEmail("daddy", "Hello", "This is a test email").Wait();
+
+        // Bridge pattern
+        TechDeviceBase techDeviceBase = new RemoteDeviceControl(new PhoneDevice());
+        techDeviceBase.TurnOn();
+        techDeviceBase.TurnOff();
+
+        if (techDeviceBase is RemoteDeviceControl remoteDeviceControl)
+        {
+            remoteDeviceControl.SetDevice(new TvDevice());
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid device type");
+        }
+
+        remoteDeviceControl.TurnOn();
+        remoteDeviceControl.TurnOff();
 
         #endregion
     }
