@@ -17,6 +17,7 @@ using Behavior.State;
 using Behavior.Mediatr;
 using Structural.Adapter;
 using Structural.Bridge;
+using Structural.Proxy;
 
 internal partial class Program
 {
@@ -149,7 +150,12 @@ internal partial class Program
         subFolder.Add(new Structural.Composite.File("File3.txt"));
         folder.Add(subFolder);
         folder.Display();
-        
+
+        // Proxy pattern
+        IService service = new ServiceProxy();
+        var data = service.GetData().Result;
+        service.AddData("New Item").Wait();
+
         #endregion
     }
 }
