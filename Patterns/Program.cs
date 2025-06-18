@@ -141,6 +141,15 @@ internal partial class Program
         remoteDeviceControl.TurnOn();
         remoteDeviceControl.TurnOff();
 
+        // Composite pattern
+        var folder = new Structural.Composite.Folder("Root Folder");
+        folder.Add(new Structural.Composite.File("File1.txt"));
+        folder.Add(new Structural.Composite.File("File2.txt"));
+        var subFolder = new Structural.Composite.Folder("Sub Folder");
+        subFolder.Add(new Structural.Composite.File("File3.txt"));
+        folder.Add(subFolder);
+        folder.Display();
+        
         #endregion
     }
 }
