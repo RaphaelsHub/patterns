@@ -6,18 +6,17 @@ using Creational.AbstractFactory.Interfaces;
 using Creational.FactoryMethod.Interfaces;
 using Creational.FactoryMethod.Factories;
 using Behavior.Strategy;
-using Behavior.Strategy.Interfaces;
 using Behavior.Strategy.AuthServices;
 using Behavior.ChainOfResponsibility.Model;
 using Behavior.ChainOfResponsibility.Abstractions;
 using Behavior.ChainOfResponsibility.ValidionsHandlers;
-using System.Windows.Input;
 using Behavior.Command;
 using Behavior.State;
 using Behavior.Mediatr;
 using Structural.Adapter;
 using Structural.Bridge;
 using Structural.Proxy;
+using IAuthService = Behavior.Strategy.Interfaces.IAuthService;
 
 internal partial class Program
 {
@@ -156,7 +155,9 @@ internal partial class Program
         var data = service.GetData().Result;
         service.AddData("New Item").Wait();
 
+        // Facade pattern
+        var facade = new Structural.Facade.AuthFacade().Register("user", "password").Result;
+
         #endregion
     }
-}
 }
